@@ -96,7 +96,32 @@ public class Main
         return q2;
         
 	}
-	
+
+public static boolean q_2(Queue<String> q)
+{
+    Queue<String> a = new Queue<>();
+
+    while (!q.isEmpty())
+    {
+        String b = q.remove();
+
+        if (isIn(b, a))
+        {
+            q.insert(b);
+            while (!a.isEmpty())
+                q.insert(a.remove());
+            return true;
+        }
+
+        a.insert(b);
+    }
+
+    while (!a.isEmpty())
+        q.insert(a.remove());
+
+    return false;
+}
+
 	
 	
 	public static Queue<Integer> q_5(Queue<Integer> q, Queue<Integer> q2)
