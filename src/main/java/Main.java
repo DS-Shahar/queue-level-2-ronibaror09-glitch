@@ -122,8 +122,60 @@ public static boolean q_2(Queue<String> q)
     return false;
 }
 
-	
-	
+public static void q_3(Queue<Integer> q)
+{
+    Queue<Integer> a = new Queue<Integer>();
+    while (!q.isEmpty())
+    {
+        int x = q.remove();
+        a.insert(x);
+        Queue<Integer> b = new Queue<Integer>();
+        while (!q.isEmpty())
+        {
+            int y = q.remove();
+            if (y != x)
+            {
+                b.insert(y);
+            }
+        }
+        while (!b.isEmpty())
+        {
+            q.insert(b.remove());
+        }
+    }
+    while (!a.isEmpty())
+    {
+        q.insert(a.remove());
+    }
+}
+
+public static void q_4(Queue<Integer> q)
+{
+    Queue<Integer> a = new Queue<Integer>();
+    Queue<Integer> b = new Queue<Integer>();
+    while (!q.isEmpty())
+    {
+        int x = q.remove();
+        while (!a.isEmpty() && a.head() < x)
+        {
+            b.insert(a.remove());
+        }
+        b.insert(x);
+        while (!a.isEmpty())
+        {
+            b.insert(a.remove());
+        }
+        while (!b.isEmpty())
+        {
+            a.insert(b.remove());
+        }
+    }
+    while (!a.isEmpty())
+    {
+        q.insert(a.remove());
+    }
+}
+
 	public static Queue<Integer> q_5(Queue<Integer> q, Queue<Integer> q2)
     {
         Queue<Integer> q_copy= copy(q);
