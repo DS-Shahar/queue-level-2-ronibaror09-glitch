@@ -241,3 +241,106 @@ public static void q_4(Queue<Integer> q)
     }
 
 }
+public class Trees1
+{
+
+    public static boolean check(BinNode<Integer> t)
+    {
+        if (t == null)
+        {
+            return false;
+        }
+        if (t.getValue() % 2 != 0)
+        {
+            return false;
+        }
+        if (t.hasLeft())
+        {
+            if (t.getLeft().getValue() % 2 != 0)
+            {
+                return false;
+            }
+        }
+        if (t.hasRight())
+        {
+            if (t.getRight().getValue() % 2 != 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void p1(BinNode<Integer> t)
+    {
+        if (t != null)
+        {
+            if (check(t))
+            {
+                System.out.println(t.getValue());
+            }
+            p1(t.getLeft());
+            p1(t.getRight());
+        }
+    }
+
+    public static int f2(BinNode<Integer> t)
+    {
+        if (t == null)
+        {
+            return 0;
+        }
+        int c = 0;
+        if (check(t))
+        {
+            c = 1;
+        }
+        return c + f2(t.getLeft()) + f2(t.getRight());
+    }
+
+    public static boolean f3(BinNode<Integer> t)
+    {
+        if (t == null)
+        {
+            return false;
+        }
+        if (check(t))
+        {
+            return true;
+        }
+        return f3(t.getLeft()) || f3(t.getRight());
+    }
+
+    public static boolean f4(BinNode<Integer> t)
+    {
+        if (t == null)
+        {
+            return true;
+        }
+        if (!check(t))
+        {
+            return false;
+        }
+        return f4(t.getLeft()) && f4(t.getRight());
+    }
+
+    public static void main(String[] args)
+    {
+        BinNode<Integer> n1 = new BinNode<Integer>(2);
+        BinNode<Integer> n2 = new BinNode<Integer>(4);
+        BinNode<Integer> t = new BinNode<Integer>(n1, 6, n2);
+
+        System.out.println("Nodes:");
+        p1(t);
+
+        int res2 = f2(t);
+        System.out.println("Count: " + res2);
+
+        boolean res3 = f3(t);
+        System.out.println("Exists: " + res3);
+
+        boolean res4 = f4(t);
+        System.out.println("All: " + res4);
+    }
+}
+
