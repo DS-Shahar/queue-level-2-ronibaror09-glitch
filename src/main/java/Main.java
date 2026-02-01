@@ -1,5 +1,425 @@
-class Main {
-  public static void main(String[] args) {
-    System.out.println("Hello World!");
-  }
+public class Main
+{
+	public static void main(String[] args)
+	{
+		Queue<String> q = new Queue<String>();
+		q.insert("a");
+		q.insert("a");
+		q.insert("b");
+		q.insert("a");
+		q.insert("d");
+		q.insert("d");
+		
+        System.out.println(q);
+        System.out.println(q_1(q));
+        
+        System.out.println();
+        
+        Queue<Integer> q1 = new Queue<Integer>();
+		q1.insert(14);
+		q1.insert(33);
+		q1.insert(34);
+		q1.insert(40);
+		q1.insert(100);
+        
+        Queue<Integer> q2 = new Queue<Integer>();
+		q2.insert(17);
+		q2.insert(32);
+		q2.insert(33);
+		q2.insert(40);
+		q2.insert(100);
+		
+        System.out.println(q1);
+        System.out.println(q2);
+        System.out.println(q_5(q1, q2));
+        
+        System.out.println();
+
+        Queue<Integer> q3 = new Queue<Integer>();
+		q3.insert(3);
+		q3.insert(3);
+		q3.insert(5);
+		q3.insert(5);
+		q3.insert(5);
+		q3.insert(6);
+		q3.insert(2);
+		q3.insert(2);
+		q3.insert(2);
+		q3.insert(2);
+		
+        System.out.println(q3);
+        System.out.println(q_6(q3));
+        
+	}
+	public static <T> Queue<T> copy(Queue<T> q1)
+    {
+        Queue<T> q2 = new Queue<T>();
+        Queue<T> q3 = new Queue<T>();
+        while(!q1.isEmpty())
+        {
+            q2.insert(q1.head());
+            q3.insert(q1.remove());
+        }
+        while(!q3.isEmpty())
+        {
+            q1.insert(q3.remove());
+        }
+        return q2;
+	}
+	
+	public static Queue<Integer> q_1(Queue<String> q)
+    {
+        Queue<String> q_copy= copy(q);
+        Queue<Integer> q2 = new Queue<Integer>();
+        while(!q_copy.isEmpty())
+        {
+            boolean x = true;
+            String s = q_copy.remove();
+            int a=1;
+            while(x && !q_copy.isEmpty())
+            {
+                
+                if(q_copy.head()==s)
+                {
+                    a++;
+                    q_copy.remove();
+                }
+                else
+                {
+                    
+                    x = false;
+                }
+            }
+            q2.insert(a);
+            
+        }
+        return q2;
+        
+	}
+
+public static boolean q_2(Queue<String> q)
+{
+    Queue<String> a = new Queue<>();
+
+    while (!q.isEmpty())
+    {
+        String b = q.remove();
+
+        if (isIn(b, a))
+        {
+            q.insert(b);
+            while (!a.isEmpty())
+                q.insert(a.remove());
+            return true;
+        }
+
+        a.insert(b);
+    }
+
+    while (!a.isEmpty())
+        q.insert(a.remove());
+
+    return false;
+}
+
+public static void q_3(Queue<Integer> q)
+{
+    Queue<Integer> a = new Queue<Integer>();
+    while (!q.isEmpty())
+    {
+        int x = q.remove();
+        a.insert(x);
+        Queue<Integer> b = new Queue<Integer>();
+        while (!q.isEmpty())
+        {
+            int y = q.remove();
+            if (y != x)
+            {
+                b.insert(y);
+            }
+        }
+        while (!b.isEmpty())
+        {
+            q.insert(b.remove());
+        }
+    }
+    while (!a.isEmpty())
+    {
+        q.insert(a.remove());
+    }
+}
+
+public static void q_4(Queue<Integer> q)
+{
+    Queue<Integer> a = new Queue<Integer>();
+    Queue<Integer> b = new Queue<Integer>();
+    while (!q.isEmpty())
+    {
+        int x = q.remove();
+        while (!a.isEmpty() && a.head() < x)
+        {
+            b.insert(a.remove());
+        }
+        b.insert(x);
+        while (!a.isEmpty())
+        {
+            b.insert(a.remove());
+        }
+        while (!b.isEmpty())
+        {
+            a.insert(b.remove());
+        }
+    }
+    while (!a.isEmpty())
+    {
+        q.insert(a.remove());
+    }
+}
+
+	public static Queue<Integer> q_5(Queue<Integer> q, Queue<Integer> q2)
+    {
+        Queue<Integer> q_copy= copy(q);
+        Queue<Integer> q2_copy= copy(q2);
+        Queue<Integer> q3 = new Queue<Integer>();
+        
+        while(!q_copy.isEmpty() && !q2_copy.isEmpty())
+        {
+            if(q_copy.head()>q2_copy.head())
+            {
+                q3.insert(q2_copy.remove());
+            }
+            else
+            {
+                q3.insert(q_copy.remove());
+            }
+        }
+        while(!q2_copy.isEmpty())
+        {
+            q3.insert(q2_copy.remove());
+        }
+        while(!q_copy.isEmpty())
+        {
+            q3.insert(q_copy.remove());
+        }
+        return q3;
+    }
+    
+    
+    public static int q_6(Queue<Integer> q1) 
+    {
+        Queue<Integer> q= copy(q1);
+        int m=0;
+        int s=0;
+        int c=0;
+        int t=0;
+        while (!q.isEmpty()) 
+        {
+            int x = q.remove();
+            
+            if (x % 2 == 0) 
+            {
+                c++;
+                t += x;
+            } 
+            else 
+            {
+                if (c > m) 
+                {
+                    m = c;
+                    s = t;
+                }
+                c = 0;
+                t = 0;
+            }
+        }
+        if (c > m) 
+        {
+            m=c;
+            s=t;
+        }
+        return s;
+    }
+
+}
+public class Trees1
+{
+
+    public static boolean check(BinNode<Integer> t)
+    {
+        if (t == null)
+        {
+            return false;
+        }
+        if (t.getValue() % 2 != 0)
+        {
+            return false;
+        }
+        if (t.hasLeft())
+        {
+            if (t.getLeft().getValue() % 2 != 0)
+            {
+                return false;
+            }
+        }
+        if (t.hasRight())
+        {
+            if (t.getRight().getValue() % 2 != 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void p1(BinNode<Integer> t)
+    {
+        if (t != null)
+        {
+            if (check(t))
+            {
+                System.out.println(t.getValue());
+            }
+            p1(t.getLeft());
+            p1(t.getRight());
+        }
+    }
+
+    public static int f2(BinNode<Integer> t)
+    {
+        if (t == null)
+        {
+            return 0;
+        }
+        int c = 0;
+        if (check(t))
+        {
+            c = 1;
+        }
+        return c + f2(t.getLeft()) + f2(t.getRight());
+    }
+
+    public static boolean f3(BinNode<Integer> t)
+    {
+        if (t == null)
+        {
+            return false;
+        }
+        if (check(t))
+        {
+            return true;
+        }
+        return f3(t.getLeft()) || f3(t.getRight());
+    }
+
+    public static boolean f4(BinNode<Integer> t)
+    {
+        if (t == null)
+        {
+            return true;
+        }
+        if (!check(t))
+        {
+            return false;
+        }
+        return f4(t.getLeft()) && f4(t.getRight());
+    }
+
+    public static void main(String[] args)
+    {
+        BinNode<Integer> n1 = new BinNode<Integer>(2);
+        BinNode<Integer> n2 = new BinNode<Integer>(4);
+        BinNode<Integer> t = new BinNode<Integer>(n1, 6, n2);
+
+        System.out.println("Nodes:");
+        p1(t);
+
+        int res2 = f2(t);
+        System.out.println("Count: " + res2);
+
+        boolean res3 = f3(t);
+        System.out.println("Exists: " + res3);
+
+        boolean res4 = f4(t);
+        System.out.println("All: " + res4);
+    }
+}
+
+
+public class Trees2 {
+
+    public static void main(String[] args) {
+        BinNode<Integer> t1 = build1();
+        BinNode<Integer> t2 = build2();
+
+        System.out.println(ex14(t1));
+        System.out.println(ex18(t1, t2));
+        System.out.println(ex20(t1));
+    }
+
+    public static BinNode<Integer> build1() {
+        BinNode<Integer> r = new BinNode<>(10);
+        BinNode<Integer> l = new BinNode<>(-5);
+        BinNode<Integer> n = new BinNode<>(20);
+        r.setLeft(l);
+        r.setRight(n);
+        return r;
+    }
+
+    public static BinNode<Integer> build2() {
+        BinNode<Integer> r = new BinNode<>(10);
+        BinNode<Integer> l = new BinNode<>(-5);
+        r.setLeft(l);
+        return r;
+    }
+
+    public static int ex14(BinNode<Integer> t) {
+        int c = 0;
+        if (t == null)
+            return 0;
+        if (!t.hasLeft() && !t.hasRight())
+            c++;
+        return c + ex14(t.getLeft()) + ex14(t.getRight());
+    }
+
+    public static boolean ex18(BinNode<Integer> t1, BinNode<Integer> t2) {
+        if (t2 == null)
+            return true;
+        if (!has(t1, t2.getValue()))
+            return false;
+        return ex18(t1, t2.getLeft()) && ex18(t1, t2.getRight());
+    }
+
+    public static boolean has(BinNode<Integer> t, int v) {
+        if (t == null)
+            return false;
+        if (t.getValue() == v)
+            return true;
+        return has(t.getLeft(), v) || has(t.getRight(), v);
+    }
+
+    public static int ex20(BinNode<Integer> t) {
+        if (t == null)
+            return 0;
+        return sPos(t) - Math.abs(sNeg(t));
+    }
+
+    public static int sPos(BinNode<Integer> t) {
+        if (t == null)
+            return 0;
+        int s = 0;
+        if (t.getValue() > 0) {
+            s = t.getValue();
+        }
+        return s + sPos(t.getLeft()) + sPos(t.getRight());
+    }
+
+    public static int sNeg(BinNode<Integer> t) {
+        if (t == null)
+            return 0;
+        int s = 0;
+        if (t.getValue() < 0) {
+            s = t.getValue();
+        }
+        return s + sNeg(t.getLeft()) + sNeg(t.getRight());
+    }
 }
